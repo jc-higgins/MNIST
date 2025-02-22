@@ -31,7 +31,16 @@ def main() -> None:
             download=True,
             transform=transform
         )
-        
+
+        # Create a dataloader
+        train_loader = DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
+
+        # Use the dataloader
+        for batch_idx, (data, labels) in enumerate(train_loader):
+            print(f"Batch shape: {data.shape}")
+            print(f"Labels shape: {labels.shape}")
+            print(f"First few labels: {labels[:5]}")
+            break
             
     except Exception as e:
         print(f"Error loading dataset: {str(e)}")
