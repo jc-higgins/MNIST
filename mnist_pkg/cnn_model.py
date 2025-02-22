@@ -1,4 +1,5 @@
 import torch
+from torch import Tensor
 
 class Net(torch.nn.Module):
     def __init__(self) -> None:
@@ -12,7 +13,14 @@ class Net(torch.nn.Module):
         self.fc2            = torch.nn.Linear(in_features=128, out_features=10)
 
 
-    def forward(self, x):
+    def forward(self, x: Tensor) -> Tensor:
+        """
+        Args:
+            x: Input tensor of shape (batch_size, 1, 28, 28)
+        Returns:
+            Tensor of shape (batch_size, 10)
+        """
+
         # Forward pass
         x = self.fir_conv_layer(x)
         x = self.relu_layer(x)

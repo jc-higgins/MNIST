@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from torch.utils.data import DataLoader
 
-def main() -> None:
+def get_dataloader() -> DataLoader:
     # Set torch hub directory to avoid permission issues
     torch.hub.set_dir(str(Path.home() / ".cache" / "torch"))
     
@@ -33,14 +33,14 @@ def main() -> None:
         )
 
         # Create a dataloader
-        train_loader = DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
+        return DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
 
         # Use the dataloader
-        for batch_idx, (data, labels) in enumerate(train_loader):
-            print(f"Batch shape: {data.shape}")
-            print(f"Labels shape: {labels.shape}")
-            print(f"First few labels: {labels[:5]}")
-            break
+        # for batch_idx, (data, labels) in enumerate(train_loader):
+        #     print(f"Batch shape: {data.shape}")
+        #     print(f"Labels shape: {labels.shape}")
+        #     print(f"First few labels: {labels[:5]}")
+        #     break
             
     except Exception as e:
         print(f"Error loading dataset: {str(e)}")
@@ -49,6 +49,3 @@ def main() -> None:
         if dataset.exists():
             shutil.rmtree(dataset)
         print("Cleaned up data directory. Please run the script again.")
-
-if __name__ == "__main__":
-    main()
