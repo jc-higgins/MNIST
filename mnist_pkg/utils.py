@@ -1,6 +1,10 @@
+from typing import Optional
 import torch
 
-def set_device() -> torch.device:
+def set_device(override: Optional[str] = None) -> torch.device:
+    if override:
+        return torch.device(override)
+    
     if not torch.backends.mps.is_available():
         if not torch.backends.mps.is_built():
             print("MPS not available because PyTorch was not built with MPS enabled")

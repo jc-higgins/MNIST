@@ -26,7 +26,7 @@ def train() -> None:
             optimiser.zero_grad()
             output = model(data)
             loss_value = loss(output, label)
-            running_loss += loss_value
+            running_loss += loss_value.item()
             loss_value.backward()
             optimiser.step()
 

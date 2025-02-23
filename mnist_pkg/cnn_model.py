@@ -8,7 +8,7 @@ class Net(torch.nn.Module):
         self.fir_conv_layer = torch.nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3)
         self.sec_conv_layer = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
         self.relu_layer     = torch.nn.ReLU()
-        self.pooling_layer  = torch.nn.AvgPool2d(kernel_size=2, stride=2)
+        self.pooling_layer  = torch.nn.MaxPool2d(kernel_size=2, stride=2)
         self.fc1            = torch.nn.Linear(in_features=64*12*12, out_features=128)
         self.fc2            = torch.nn.Linear(in_features=128, out_features=10)
 
