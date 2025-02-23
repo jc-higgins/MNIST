@@ -128,6 +128,13 @@ def model_test() -> None:
         class_acc = 100 * per_class_correct[i] / per_class_total[i]
         print(f"Accuracy of digit {i}: {class_acc:.2f}%")
 
+    print("\nConfusion Matrix:")
+    print("    Pred-> 0    1    2    3    4    5    6    7    8    9")
+    print("True")
+    for i in range(10):
+        row = confusion_matrix[i].int()
+        print(f"{i:4d}     {row[0]:4d} {row[1]:4d} {row[2]:4d} {row[3]:4d} {row[4]:4d} {row[5]:4d} {row[6]:4d} {row[7]:4d} {row[8]:4d} {row[9]:4d}")
+
 if __name__ == "__main__":
     # model_train()
     model_test()
