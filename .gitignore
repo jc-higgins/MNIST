@@ -173,3 +173,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Cursor / VSCode
+.VSCode
+.mypy_cache
+.build

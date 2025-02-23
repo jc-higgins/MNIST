@@ -4,7 +4,7 @@ setup(
     name="mnist_pkg",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=['torch', 'torchvision', 'matplotlib'],
+    install_requires=['torch', 'torchvision', 'matplotlib', 'pytest'],
     description='Small MNIST Package',
     author='John Higgins',
     url="https://github.com/jc-higgins/MNIST"
