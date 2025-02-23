@@ -72,19 +72,19 @@ def model_train() -> None:
                 epoch=epoch,
                 optimiser=optimiser,
                 loss=best_validation_loss,
-                path="data/MNIST/models/best_model.pth"
+                model_filename="best_model.pth"
             )
 
 
 def model_test() -> None:
     device = set_device()
 
-    per_class_correct = torch.zeroes(10)
-    per_class_total = torch.zeroes(10)
+    per_class_correct = torch.zeros(10).to(device)
+    per_class_total = torch.zeros(10).to(device)
     # Rows are correct, Columns are predictions
-    confusion_matrix = torch.zeroes(10, 10)
+    confusion_matrix = torch.zeros(10, 10).to(device)
 
-    model = Net(device)
+    model = Net().to(device)
     optimiser = torch.optim.Adam(model.parameters())
     loss = torch.nn.CrossEntropyLoss()
 
@@ -129,5 +129,5 @@ def model_test() -> None:
         print(f"Accuracy of digit {i}: {class_acc:.2f}%")
 
 if __name__ == "__main__":
-    model_train()
+    # model_train()
     model_test()

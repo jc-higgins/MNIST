@@ -30,7 +30,7 @@ def save_model(model: torch.nn.Module, epoch: int, optimiser: torch.optim.Optimi
 
 
 def load_model(model: torch.nn.Module, optimiser: torch.optim.Optimizer, model_filename: str = "model.pth") -> tuple[torch.nn.Module, torch.optim.Optimizer, int, float]:
-    checkpoint = torch.load(MODELS_PATH / model_filename)
+    checkpoint = torch.load(MODELS_PATH / model_filename, weights_only=True)
     model.load_state_dict(checkpoint["model_state_dict"])
     optimiser.load_state_dict(checkpoint["optimiser_state_dict"])
     epoch = checkpoint["epoch"]
