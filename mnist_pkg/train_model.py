@@ -1,9 +1,10 @@
 import torch
 from mnist_pkg.cnn_model import Net
+from mnist_pkg.constants import MODELS_PATH
 from mnist_pkg.data_loader import MnistDataloader
-from mnist_pkg.utils import save_model, set_device
+from mnist_pkg.utils import load_model, save_model, set_device
 
-def train() -> None:
+def model_train() -> None:
     device = set_device()
 
     # Instantiate model
@@ -22,7 +23,6 @@ def train() -> None:
     dataloader = MnistDataloader()
     train_loader = dataloader.get_training_dataloader()
     validation_loader = dataloader.get_validation_dataloader()
-    test_loader = dataloader.get_test_dataloader()
 
     for epoch in range(epochs):
         validation_total = validation_correct = validation_running_loss = 0
@@ -70,10 +70,64 @@ def train() -> None:
             save_model(
                 model=model,
                 epoch=epoch,
-                optimizer=optimiser,
+                optimiser=optimiser,
                 loss=best_validation_loss,
                 path="data/MNIST/models/best_model.pth"
             )
 
+
+def model_test() -> None:
+    device = set_device()
+
+    per_class_correct = torch.zeroes(10)
+    per_class_total = torch.zeroes(10)
+    # Rows are correct, Columns are predictions
+    confusion_matrix = torch.zeroes(10, 10)
+
+    model = Net(device)
+    optimiser = torch.optim.Adam(model.parameters())
+    loss = torch.nn.CrossEntropyLoss()
+
+    if not (MODELS_PATH / "best_model.pth").exists():
+        raise FileNotFoundError("Please create a best_model by running train().")
+
+    load_model(model, optimiser, "best_model.pth")
+
+    dataloader = MnistDataloader()
+    test_loader = dataloader.get_test_dataloader()
+
+    running_test_loss = test_correct = test_total = 0
+
+    model.eval()
+    with torch.no_grad():
+        for batch_idx, (data, labels) in enumerate(test_loader):
+            data = data.to(device)
+            labels = labels.to(device)
+
+            output = model(data)
+            test_loss = loss(output, labels)
+            running_test_loss += test_loss.item()
+
+            _, predicted = torch.max(output, 1)
+
+            for label, pred in zip(labels, predicted):
+                per_class_total[label] += 1
+                per_class_correct[label] += (label == pred)
+                confusion_matrix[label][pred] += 1
+
+            test_total += len(data)
+            test_correct += (predicted == labels).sum().item()
+    
+    ave_test_loss = running_test_loss / len(test_loader)
+    test_accuracy = 100 * test_correct/test_total 
+    print(f"Test Performance: {test_correct}/{test_total} correct, {test_accuracy:.2f}")
+    print(f"Average Test Loss: {ave_test_loss:.4f}")
+    
+    # Per-class results
+    for i in range(10):
+        class_acc = 100 * per_class_correct[i] / per_class_total[i]
+        print(f"Accuracy of digit {i}: {class_acc:.2f}%")
+
 if __name__ == "__main__":
-    train()
+    model_train()
+    model_test()
