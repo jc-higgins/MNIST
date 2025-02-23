@@ -1,6 +1,6 @@
 import torch
 from mnist_pkg.cnn_model import Net
-from mnist_pkg.data_loader import get_dataloader
+from mnist_pkg.data_loader import MnistDataloader
 from mnist_pkg.utils import set_device
 
 def train() -> None:
@@ -16,7 +16,8 @@ def train() -> None:
     epochs = 5
     optimiser = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    train_loader = get_dataloader()
+    dataloader = MnistDataloader()
+    train_loader = dataloader.get_training_dataloader()
 
     for epoch in range(epochs):
         for batch_idx, (data, label) in enumerate(train_loader):
