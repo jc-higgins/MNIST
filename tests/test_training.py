@@ -1,5 +1,4 @@
 import torch
-from mnist_pkg.train_model import train
 from mnist_pkg.cnn_model import Net
 
 def test_validation_loss_calculation():
