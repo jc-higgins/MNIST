@@ -19,9 +19,18 @@ This project helped me learn:
 - Confusion matrix analysis
 
 ## Results
-The model achieves:
-- 99.08% accuracy on test data
-- Consistent performance across all digits (within a %)
-- Average test loss of 0.0291
+### Model Performance
+| Metric | Value |
+|--------|--------|
+| Test Accuracy | 99.08% |
+| Test Loss | 0.0291 |
+
+### Confusion Matrix
+![Confusion Matrix](assets/confusion_matrix.png)
+
+### Key Highlights
+- Achieved high accuracy across all digit classes
+- Consistent performance with <1% variance between digits
+- Robust generalization on unseen test data
 
 
