@@ -16,6 +16,5 @@ def test_model_forward_pass() -> None:
     batch_size = 32
     x = torch.randn(batch_size, 1, 28, 28)
     output = model(x)
-    
+
     assert not torch.isnan(output).any()
-    

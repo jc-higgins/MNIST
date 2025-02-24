@@ -4,6 +4,7 @@ from mnist_pkg.constants import MODELS_PATH
 from mnist_pkg.data_loader import MnistDataloader
 from mnist_pkg.utils import load_model, save_model, set_device
 
+
 def model_train() -> None:
     device = set_device()
 
@@ -42,9 +43,12 @@ def model_train() -> None:
 
             if batch_idx % print_every == 0 and batch_idx > 0:
                 avg_loss = running_loss / print_every
-                print(f'Epoch {epoch+1}/{epochs}, Batch {batch_idx}, Average Loss: {avg_loss:.4f}')
+                print(
+                    f"Epoch {epoch + 1}/{epochs}, Batch {batch_idx}, "
+                    f"Average Loss: {avg_loss:.4f}"
+                )
                 running_loss = 0.0
-        
+
         # Validate
         model.eval()
         with torch.no_grad():
@@ -62,7 +66,10 @@ def model_train() -> None:
 
         ave_validation_loss = validation_running_loss / len(validation_loader)
         validation_accuracy = 100 * validation_correct / validation_total
-        print(f'Validation Loss: {ave_validation_loss:.4f}, Accuracy: {validation_accuracy:.2f}%')
+        print(
+            f"Validation Loss: {ave_validation_loss:.4f}, "
+            f"Accuracy: {validation_accuracy:.2f}%"
+        )
 
         # Save if better
         if ave_validation_loss < best_validation_loss:
@@ -72,7 +79,7 @@ def model_train() -> None:
                 epoch=epoch,
                 optimiser=optimiser,
                 loss=best_validation_loss,
-                model_filename="best_model.pth"
+                model_filename="best_model.pth",
             )
 
 
@@ -112,17 +119,17 @@ def model_test() -> None:
 
             for label, pred in zip(labels, predicted):
                 per_class_total[label] += 1
-                per_class_correct[label] += (label == pred)
+                per_class_correct[label] += label == pred
                 confusion_matrix[label][pred] += 1
 
             test_total += len(data)
             test_correct += (predicted == labels).sum().item()
-    
+
     ave_test_loss = running_test_loss / len(test_loader)
-    test_accuracy = 100 * test_correct/test_total 
+    test_accuracy = 100 * test_correct / test_total
     print(f"Test Performance: {test_correct}/{test_total} correct, {test_accuracy:.2f}")
     print(f"Average Test Loss: {ave_test_loss:.4f}")
-    
+
     # Per-class results
     for i in range(10):
         class_acc = 100 * per_class_correct[i] / per_class_total[i]
@@ -133,7 +140,12 @@ def model_test() -> None:
     print("True")
     for i in range(10):
         row = confusion_matrix[i].int()
-        print(f"{i:4d}     {row[0]:4d} {row[1]:4d} {row[2]:4d} {row[3]:4d} {row[4]:4d} {row[5]:4d} {row[6]:4d} {row[7]:4d} {row[8]:4d} {row[9]:4d}")
+        print(
+            f"{i:4d}     {row[0]:4d} {row[1]:4d} {row[2]:4d} {row[3]:4d} "
+            f"{row[4]:4d} {row[5]:4d} {row[6]:4d} {row[7]:4d} {row[8]:4d} "
+            f"{row[9]:4d}"
+        )
+
 
 if __name__ == "__main__":
     # model_train()
