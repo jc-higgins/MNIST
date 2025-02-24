@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mnist_pkg"
+version = "0.1.0"
+description = "Small MNIST Package"
+authors = [
+    {name = "John Higgins"}
+]
+dependencies = [
+    "torch",
+    "torchvision",
+    "matplotlib",
+    "pytest",
+]
+urls = {Homepage = "https://github.com/jc-higgins/MNIST"}
+
+[tool.ruff]
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.12
+target-version = "py312"
+
+[tool.ruff.lint]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
