@@ -34,7 +34,7 @@ class DigitDrawer:
             event.x,
             event.y,
             fill="white",
-            width=10,
+            width=20,
             capstyle=tk.ROUND,
             smooth=True,
             splinesteps=36,
@@ -55,7 +55,7 @@ class DigitDrawer:
 
         for item in self.canvas.find_all():
             coords = self.canvas.coords(item)
-            draw.line(coords, fill=255, width=10)
+            draw.line(coords, fill=255, width=20)
 
         image = image.resize((28, 28))
         image_array = np.array(image)
