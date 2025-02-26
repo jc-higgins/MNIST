@@ -1,3 +1,4 @@
+from pathlib import Path
 import tkinter as tk
 from tkinter import Canvas, Event, Frame, Label
 from PIL import Image, ImageDraw
@@ -69,6 +70,13 @@ class DigitDrawer:
             self.guess_label.config(text=self.guess)
 
     def __init__(self) -> None:
+        if not Path(MODELS_PATH / "best_model.pth").exists():
+            raise FileNotFoundError(
+                "The trained model is missing. "
+                "Please run model_train() in train_model.py "
+                "to generate the best model."
+            )
+
         self.root = tk.Tk()
         self.root.title("Draw a digit")
 
