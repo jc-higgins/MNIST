@@ -33,4 +33,5 @@ This project helped me learn:
 - Consistent performance with <1% variance between digits
 - Robust generalization on unseen test data
 
-
+### Fun component :)
+- Small TKinter Canvas drawing application which will predict drawn digits
